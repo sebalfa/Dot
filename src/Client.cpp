@@ -95,11 +95,14 @@ int CLIENT::Transfer(std::string message, std::string keyPair)
     {
         //Connect to Node: --------
         tcp::resolver resolver(io_service);
-        tcp::resolver::query query("10.0.2.2", "9393");
+        tcp::resolver::query query("10.0.2.29", "9393");
         tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+        
+        
         
         tcp::socket socket(io_service);
         boost::asio::connect(socket, endpoint_iterator);
+        
         //Connected to Node ---------------/
         
         //Send message -----

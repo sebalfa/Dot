@@ -30,6 +30,7 @@
 
 int Validate(std::string txt, std::string sig, std::string pubKey)
 {
+    sig.erase(256);
     sig = hex_to_string(sig);
     //Read public key
     CryptoPP::ByteQueue bytes;
@@ -73,6 +74,7 @@ int Validate(std::string txt, std::string sig, std::string pubKey)
 
 std::string string_to_hex(const std::string& input)
 {
+    
     static const char* const lut = "0123456789ABCDEF";
     size_t len = input.length();
     
@@ -84,6 +86,7 @@ std::string string_to_hex(const std::string& input)
         output.push_back(lut[c >> 4]);
         output.push_back(lut[c & 15]);
     }
+    std::cout << output << std::endl;
     return output;
 }
 

@@ -37,6 +37,8 @@ class NODE {
     boost::asio::io_service io_service;
     std::string response;
     boost::system::error_code error;
+    
+    
     int parseCmd(std::string cmd);
     int Broadcast(std::string msg);
     CONSENT consensus;
