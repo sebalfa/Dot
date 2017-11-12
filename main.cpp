@@ -57,7 +57,7 @@ void startScreen(std::string s = "") {
 int argHandler(int argc, const char * argv[]){
     
     if(argc < 2){
-        //no arguments parsed, terminate.
+        // No arguments parsed, terminate.
         std::cout << "No valid arguments parsed. See manual (-h)." << std::endl;
         return 1;
     }
@@ -68,7 +68,7 @@ int argHandler(int argc, const char * argv[]){
     
     //Check if client or node:
     if( arg == "-c" || arg == "-client" || arg == "-clientmode" ){
-        //initiate client mode.
+        //Initiate client mode.
         CLIENT c;
         std::cout << "Client mode initiated.\nCommand:" << std::endl;
         std::string cmd;

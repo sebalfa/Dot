@@ -36,10 +36,20 @@
 #include <cryptopp/base64.h>
 #include <cryptopp/files.h>
 #include <cryptopp/filters.h>
+#include <boost/array.hpp>
+#include <boost/asio.hpp>
+
+class CONSENT {
+public:
+    std::vector<std::string> ips;
+    
+};
+
 
 int Validate(std::string txt, std::string sig, std::string pubkey);
 std::string hex_to_string(const std::string& input);
 std::string string_to_hex(const std::string& input);
 void clearTerminal();
+
 
 #endif /* Cross_hpp */

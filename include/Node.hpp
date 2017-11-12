@@ -24,23 +24,22 @@
 //  SOFTWARE.
 //
 
-#include <ctime>
+#include "../include/Cross.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/asio.hpp>
-#include <boost/array.hpp>
+#include <thread>
 
 using boost::asio::ip::tcp;
 
 class NODE {
     std::vector<std::string> v;
     boost::asio::io_service io_service;
-    std::string cmd, response;
+    std::string response;
     boost::system::error_code error;
-    boost::array<char, 8192> buf;
-    int parseCmd();
-   
+    int parseCmd(std::string cmd);
+    int Broadcast(std::string msg);
+    CONSENT consensus;
 public:
     int Listen();
 

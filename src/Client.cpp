@@ -26,10 +26,10 @@
 
 #include <stdio.h>
 #include "../include/Client.hpp"
-#include "../include/Cross.hpp"
 
 std::string CLIENT::Sign(std::string tx)
 {
+    
     //Read private key --------
     CryptoPP::StringSource ss( private_key, true, new CryptoPP::Base64Decoder( ) );
     ss.TransferTo(bytes);
@@ -84,32 +84,30 @@ int CLIENT::parseKeyPair(std::string keyPair)
     return 0;
 }
 
-int CLIENT::Transfer(std::string c, std::string keyPair)
+int CLIENT::Transfer(std::string message, std::string keyPair)
 {
     parseKeyPair(keyPair);
-    sign = Sign(c);
-    c = c + public_key +"\n"+ sign;
+    sign = Sign(message);
+    message = message + public_key +"\n"+ sign;
     
     std::cout << "\nConnecting to node.." << std::endl;
     try
     {
         //Connect to Node: --------
         tcp::resolver resolver(io_service);
-        tcp::resolver::query query("10.0.2.26", "9393");
+        tcp::resolver::query query("10.0.2.2", "9393");
         tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
         
         tcp::socket socket(io_service);
         boost::asio::connect(socket, endpoint_iterator);
         //Connected to Node ---------------/
         
-        //Prepare and send message -------
-        std::string message = c;
-        std::copy(message.begin(), message.end(), bufa.begin());
-        
+        //Send message -----
         boost::asio::write(socket, boost::asio::buffer(message), error);
         //-----------
         
         //Wait for response -----------
+        boost::array<char, 8192> buf;
         while(true)
         {
            
@@ -125,7 +123,10 @@ int CLIENT::Transfer(std::string c, std::string keyPair)
                 throw boost::system::system_error(error); // Some other error.
             }
             if( std::strlen(buf.data()) > 0 ){
-                std::cout << buf.data() << "\nDisconnecting from node." << std::endl;
+                //Handle response
+                char rsp = buf.data()[0];
+                
+                std::cout << rsp << "\nDisconnecting from node." << std::endl;
                 break;
             }
         }

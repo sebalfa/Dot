@@ -26,6 +26,8 @@
 
 #include "../include/Cross.hpp"
 
+
+
 int Validate(std::string txt, std::string sig, std::string pubKey)
 {
     sig = hex_to_string(sig);
@@ -89,7 +91,7 @@ std::string hex_to_string(const std::string& input)
 {
     static const char* const lut = "0123456789ABCDEF";
     size_t len = input.length();
-    if (len & 1) throw std::invalid_argument("odd length");
+    if (len & 1) throw std::invalid_argument("Odd length.");
     
     std::string output;
     output.reserve(len / 2);
@@ -97,11 +99,11 @@ std::string hex_to_string(const std::string& input)
     {
         char a = input[i];
         const char* p = std::lower_bound(lut, lut + 16, a);
-        if (*p != a) throw std::invalid_argument("not a hex digit");
+        if (*p != a) throw std::invalid_argument("Argument not a hex-digit.");
         
         char b = input[i + 1];
         const char* q = std::lower_bound(lut, lut + 16, b);
-        if (*q != b) throw std::invalid_argument("not a hex digit");
+        if (*q != b) throw std::invalid_argument("Argument not a hex-digit.");
         
         output.push_back(((p - lut) << 4) | (q - lut));
     }
